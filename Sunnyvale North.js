@@ -48,12 +48,12 @@ async function getDepartures() {
         const t = new Date(j.expected);
         return {
           destination: j.destination,
-          minutes: Math.round((t - new Date()) / 60000),
+          departureTime: t,
           timeStr: t.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
         };
       })
-      .filter(j => j.minutes >= 0)
-      .sort((a, b) => a.minutes - b.minutes)
+      .filter(j => j.departureTime >= new Date())
+      .sort((a, b) => a.departureTime - b.departureTime)
       .slice(0, NUM_RESULTS);
 
   } catch (err) {
@@ -85,9 +85,23 @@ async function createWidget() {
     msg.font = Font.mediumSystemFont(12);
   } else {
     for (const d of departures) {
-      const row = w.addText(`${d.minutes} min  •  ${d.timeStr}`);
-      row.font = Font.mediumSystemFont(13);
-      row.textColor = Color.white();
+      const rowStack = w.addStack();
+      rowStack.layoutHorizontally();
+      rowStack.centerAlignContent();
+      rowStack.spacing = 0;
+
+      const depDate = rowStack.addDate(d.departureTime);
+      depDate.applyRelativeTimerStyle();
+      depDate.font = Font.mediumSystemFont(13);
+      depDate.textColor = Color.white();
+
+      const separator = rowStack.addText("  •  ");
+      separator.font = Font.mediumSystemFont(13);
+      separator.textColor = Color.white();
+
+      const timeText = rowStack.addText(d.timeStr);
+      timeText.font = Font.mediumSystemFont(13);
+      timeText.textColor = Color.white();
     }
   }
 

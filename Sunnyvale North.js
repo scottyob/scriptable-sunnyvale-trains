@@ -100,6 +100,7 @@ async function createWidget() {
       const isPast = d.departureTime < new Date();
       const rowColor = isPast ? new Color("#FF8888") : Color.white();
 
+      // Use dynamic timer that updates continuously
       const depDate = rowStack.addDate(d.departureTime);
       depDate.applyTimerStyle();
       depDate.font = Font.mediumSystemFont(13);

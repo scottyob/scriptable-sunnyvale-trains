@@ -77,7 +77,7 @@ async function createWidget() {
   w.backgroundColor = new Color("#1E1E1E");
   w.setPadding(14, 14, 14, 14);
 
-  const title = w.addText("Palo Alto → South");
+  const title = w.addText("Palo Alto ↓");
   title.font = Font.boldSystemFont(16);
   title.textColor = Color.white();
   title.textOpacity = opacity;
@@ -94,7 +94,7 @@ async function createWidget() {
       const rowStack = w.addStack();
       rowStack.layoutHorizontally();
       rowStack.centerAlignContent();
-      rowStack.spacing = 0;
+      rowStack.spacing = 4;
 
       // Check if train has already departed (negative time)
       const isPast = d.departureTime < new Date();
@@ -102,20 +102,16 @@ async function createWidget() {
 
       // Use dynamic timer that updates continuously
       const depDate = rowStack.addDate(d.departureTime);
-      depDate.applyTimerStyle();
+      depDate.applyRelativeStyle();
       depDate.font = Font.mediumSystemFont(13);
       depDate.textColor = rowColor;
       depDate.textOpacity = opacity;
 
-      const separator = rowStack.addText("  •  ");
-      separator.font = Font.mediumSystemFont(13);
-      separator.textColor = rowColor;
-      separator.textOpacity = opacity;
-
+      // Time next to it, much smaller
       const timeText = rowStack.addText(d.timeStr);
-      timeText.font = Font.mediumSystemFont(13);
+      timeText.font = Font.systemFont(9);
       timeText.textColor = rowColor;
-      timeText.textOpacity = opacity;
+      timeText.textOpacity = opacity * 0.7;
     }
   }
 

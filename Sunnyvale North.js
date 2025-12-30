@@ -1,11 +1,8 @@
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: light-brown; icon-glyph: magic;
 // Caltrain Southbound Departures – Palo Alto (Scriptable Widget)
 // Uses 511.org SIRI StopMonitoring
 // Updated + API key inserted
 
-const API_KEY = "80c94ed4-fc5c-4035-bb87-737050d740b2";
+const API_KEY = "80c94ed4-fc5c-4035-bb87-fake";
 const STOP_ID = "70221";   // Sunnyvale North
 const NUM_RESULTS = 4;
 
@@ -106,12 +103,15 @@ async function createWidget() {
       depDate.font = Font.mediumSystemFont(13);
       depDate.textColor = rowColor;
       depDate.textOpacity = opacity;
+      depDate.lineLimit = 1;
+      depDate.minimumScaleFactor = 0.7;
 
       // Time next to it, much smaller
       const timeText = rowStack.addText(d.timeStr);
       timeText.font = Font.systemFont(9);
       timeText.textColor = rowColor;
       timeText.textOpacity = opacity * 0.7;
+      timeText.lineLimit = 1;
     }
   }
 
